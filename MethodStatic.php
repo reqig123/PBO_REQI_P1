@@ -2,52 +2,42 @@
 
 class Produk {
     
-    // Property
-    public string $kode;
-    public string $nama;
-    public int $harga;
-    public int $stok;
+    // Property diubah menjadi static agar bisa diakses oleh method static
+    public static string $kode;
+    public static string $nama;
+    public static int $harga;
+    public static int $stok;
 
     // Constant
     public const PAJAK = 0.11;
 
-    // Method constructor untuk inisialisasi awal (opsional tapi disarankan)
-    public function __construct(string $kode, string $nama, int $harga, int $stok) {
-        $this->kode = $kode;
-        $this->nama = $nama;
-        $this->harga = $harga;
-        $this->stok = $stok;
-    }
+    // Membuat Method Static untuk memproses dan mencetak hasil
+    public static function prosesProduk(string $kodeInput, string $namaInput, int $hargaInput, int $stokInput) {
+        // Memasukkan inputan ke property static menggunakan self::
+        self::$kode = $kodeInput;
+        self::$nama = $namaInput;
+        self::$harga = $hargaInput;
+        self::$stok = $stokInput;
 
-    // Method untuk menghitung nilai pajak dari harga
-    public function hitungJumlahPajak(): float {
-        return $this->harga * self::PAJAK;
-    }
+        // HITUNG PAJAK
+        $pajak = self::PAJAK * 100;
+        $jumlahpajak = self::$harga * self::PAJAK;
 
-    // Method untuk menghitung total harga (harga asli + pajak)
-    public function hitungTotalHarga(): float {
-        return $this->harga + $this->hitungJumlahPajak();
-    }
+        // total
+        $total = self::$harga + $jumlahpajak;
 
-    // Method untuk menampilkan semua informasi produk
-    public function cetakInfo(): void {
-        $persentasePajak = self::PAJAK * 100;
-        
-        echo "Produk: " . $this->nama . "<br>";
-        echo "Kode: " . $this->kode . "<br>";
-        // Menggunakan number_format agar harga lebih rapi (opsional)
-        echo "Harga: Rp." . number_format($this->harga, 0, ',', '.') . "<br>";
-        echo "Stok: " . $this->stok . "<br>";
-        echo "Pajak: " . $persentasePajak . "%" . "<br>";
-        echo "Total harga setelah pajak: Rp." . number_format($this->hitungTotalHarga(), 0, ',', '.') . "<br>";
+        // hasil
+        echo "produk: " . self::$nama . "<br>";
+        echo "kode: " . self::$kode . "<br>";
+        echo "harga: " . self::$harga . "<br>";
+        echo "stok: " . self::$stok . "<br>";
+        echo "pajak: " . $pajak . "%" . "<br>";
+        echo "total harga setelah pajak: Rp." . $total;
     }
 }
 
-// Object
-// Menginput ke property sekarang lebih ringkas menggunakan constructor
-$produk = new Produk('P001', 'Laptop', 10000000, 5);
-
-// Menampilkan hasil cukup dengan memanggil satu method
-$produk->cetakInfo();
+// Tidak ada lagi '$produk = new produk();'
+// Inputan langsung dikirim melalui pemanggilan method static-nya
+Produk::prosesProduk('P001', 'Laptop', 10000000, 5);
 
 ?>
