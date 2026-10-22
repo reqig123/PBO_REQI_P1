@@ -36,11 +36,7 @@ class Produk {
     }
 }
 
-// ==========================================
-// CARA PEMANGGILAN STATIC
-// ==========================================
 
-// Tidak ada lagi '$produk = new produk();'
 // Inputan langsung dikirim melalui pemanggilan method static-nya
 Produk::prosesProduk('P001', 'Laptop', 10000000, 5);
 
