@@ -1,13 +1,21 @@
 <?php
-// Menghubungkan file Produk.php (pastikan file berada di folder yang sama)
-require_once 'Produk.php';
 
-// Menerapkan konsep 'use' untuk memanggil class Produk dari namespace App\Models
-use App\Models\Produk;
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// Membuat object baru dari class Produk
-$produk = new Produk('P001', 'Laptop', 10000000, 5);
+require('./Produk.php');
 
-// Menampilkan hasil
-$produk->cetakInfo();
-?>
+use Pbo\Marketplace\Produk;
+
+$produk = new Produk();
+
+$produk->setKode('P0001')
+    ->setNama('Laptop')
+    ->setHarga(10000000)
+    ->setStok(5);
+
+echo "Produk: " . $produk->getNama() . "<br/>";
+echo "Harga: " . $produk->getHarga() . "<br/>";
+echo "Stok: " . $produk->getStok() . "<br/>";
+echo "Pajak: " . $produk->pajak() . "%<br/><br/>";
+echo "Total harga setelah pajak: Rp." . $produk->total();
