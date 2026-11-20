@@ -1,37 +1,73 @@
 <?php
-// Mendefinisikan namespace untuk mengelompokkan class
-namespace App\Models; 
+
+namespace Pbo\Marketplace;
 
 class Produk {
-    public string $kode;
-    public string $nama;
-    public int $harga;
-    public int $stok;
+    // Property (Encapsulation: private)
+    private string $kode;
+    private string $nama;
+    private int $harga;
+    private int $stok;
+
+    // Constant
     public const PAJAK = 0.11;
 
-    public function __construct(string $kode, string $nama, int $harga, int $stok) {
+    public function __construct() {}
+
+    // Setter dengan Method Chaining
+    public function setKode($kode) {
         $this->kode = $kode;
+        return $this;
+    }
+
+    public function setNama($nama) {
         $this->nama = $nama;
+        return $this;
+    }
+
+    public function setHarga($harga) {
+        if ($harga <= 0) {
+            echo "harga tidak boleh 0";
+            exit();
+        }
+
         $this->harga = $harga;
+        return $this;
+    }
+
+    public function setStok($stok) {
+        if ($stok <= 0) {
+            echo "stok tidak boleh 0";
+            exit();
+        }
+
         $this->stok = $stok;
+        return $this;
     }
 
-    public function hitungJumlahPajak(): float {
-        return $this->harga * self::PAJAK;
+    // Getter
+    public function getKode() {
+        return $this->kode;
     }
 
-    public function hitungTotalHarga(): float {
-        return $this->harga + $this->hitungJumlahPajak();
+    public function getNama() {
+        return $this->nama;
     }
 
-    public function cetakInfo(): void {
-        $persentasePajak = self::PAJAK * 100;
-        echo "Produk: " . $this->nama . "<br>";
-        echo "Kode: " . $this->kode . "<br>";
-        echo "Harga: Rp." . number_format($this->harga, 0, ',', '.') . "<br>";
-        echo "Stok: " . $this->stok . "<br>";
-        echo "Pajak: " . $persentasePajak . "%" . "<br>";
-        echo "Total harga setelah pajak: Rp." . number_format($this->hitungTotalHarga(), 0, ',', '.') . "<br>";
+    public function getHarga() {
+        return $this->harga;
+    }
+
+    public function getStok() {
+        return $this->stok;
+    }
+
+    // Method Perhitungan
+    public function pajak() {
+        return self::PAJAK * 100;
+    }
+
+    public function total() {
+        return $this->harga + ($this->harga * self::PAJAK);
     }
 }
-?>
