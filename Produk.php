@@ -3,11 +3,11 @@
 namespace Pbo\Marketplace;
 
 class Produk {
-    // Property (Encapsulation: private)
-    private string $kode;
-    private string $nama;
-    private int $harga;
-    private int $stok;
+    // Property diubah ke protected agar bisa diwarisi child class
+    protected string $kode;
+    protected string $nama;
+    protected int $harga;
+    protected int $stok;
 
     // Constant
     public const PAJAK = 0.11;
@@ -62,12 +62,16 @@ class Produk {
         return $this->stok;
     }
 
-    // Method Perhitungan
+    // Method Perhitungan & Info Dasar
     public function pajak() {
         return self::PAJAK * 100;
     }
 
     public function total() {
         return $this->harga + ($this->harga * self::PAJAK);
+    }
+
+    public function getInfo() {
+        return "Kode: {$this->kode} | Produk: {$this->nama} | Harga: Rp.{$this->harga} | Stok: {$this->stok}";
     }
 }
