@@ -2,19 +2,16 @@
 
 namespace Pbo\Marketplace;
 
-class Produk {
-    // Property diubah ke protected agar bisa diwarisi child class
-    protected string $kode;
-    protected string $nama;
-    protected int $harga;
-    protected int $stok;
+trait Produk {
+    private string $kode;
+    private string $nama;
+    private int $harga;
+    private int $stok;
 
-    // Constant
-    public const PAJAK = 0.11;
+    public function __construct() {
+    }
 
-    public function __construct() {}
-
-    // Setter dengan Method Chaining
+    //setter
     public function setKode($kode) {
         $this->kode = $kode;
         return $this;
@@ -30,7 +27,6 @@ class Produk {
             echo "harga tidak boleh 0";
             exit();
         }
-
         $this->harga = $harga;
         return $this;
     }
@@ -40,12 +36,11 @@ class Produk {
             echo "stok tidak boleh 0";
             exit();
         }
-
         $this->stok = $stok;
         return $this;
     }
 
-    // Getter
+    //getter
     public function getKode() {
         return $this->kode;
     }
@@ -55,23 +50,19 @@ class Produk {
     }
 
     public function getHarga() {
-        return $this->harga;
+        return "Rp." . $this->harga;
     }
 
     public function getStok() {
-        return $this->stok;
+        return $this->stok . "pcs";
     }
 
-    // Method Perhitungan & Info Dasar
     public function pajak() {
-        return self::PAJAK * 100;
+        return constant(static::class . '::PAJAK') * 100;
     }
 
     public function total() {
-        return $this->harga + ($this->harga * self::PAJAK);
-    }
-
-    public function getInfo() {
-        return "Kode: {$this->kode} | Produk: {$this->nama} | Harga: Rp.{$this->harga} | Stok: {$this->stok}";
+        $pajak = constant(static::class . '::PAJAK');
+        return $this->harga + ($this->harga * $pajak);
     }
 }

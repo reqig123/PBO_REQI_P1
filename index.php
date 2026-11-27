@@ -1,37 +1,28 @@
 <?php
 
-require_once './Produk.php';
-require_once './Elektronik.php';
-require_once './Buku.php';
+require('./Jasa.php');
 
-use Pbo\Marketplace\Elektronik;
-use Pbo\Marketplace\Buku;
+use Pbo\Marketplace\Jasa;
 
-// Object dari Child Class Elektronik
-$laptop = new Elektronik();
-$laptop->setKode('P0001')
-    ->setNama('Laptop')
-    ->setHarga(10000000)
-    ->setStok(5)
-    ->setGaransi(24);
+//object
+$produk = new Jasa();
 
-// Object dari Child Class Buku
-$buku = new Buku();
-$buku->setKode('B0001')
-    ->setNama('Belajar OOP PHP')
-    ->setHarga(150000)
-    ->setStok(10)
-    ->setPenulis('Sandhika Galih');
+$produk->setKode('P0001')
+       ->setNama('Laptop')
+       ->setHarga(10000000)
+       ->setStok(5);
 
-// Hasil
-echo "<h3>Produk Elektronik</h3>";
-echo $laptop->getInfo() . "<br/>";
-echo "Pajak: " . $laptop->pajak() . "%<br/>";
-echo "Total harga setelah pajak: Rp." . $laptop->total();
+//hasil
+echo "Produk: " . $produk->getNama();
+echo "<br/>";
 
-echo "<hr/>";
+echo "Harga: Rp." . $produk->getHarga();
+echo "<br/>";
 
-echo "<h3>Produk Buku</h3>";
-echo $buku->getInfo() . "<br/>";
-echo "Pajak: " . $buku->pajak() . "%<br/>";
-echo "Total harga setelah pajak: Rp." . $buku->total();
+echo "Stok: " . $produk->getStok();
+echo "<br/>";
+
+echo "Pajak: " . $produk->pajak() . "%";
+echo "<br/>";
+
+echo "Total Harga Setelah Pajak: Rp" . $produk->total();
